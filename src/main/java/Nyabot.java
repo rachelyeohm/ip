@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Nyabot {
@@ -25,9 +26,11 @@ public class Nyabot {
             } else if (input.startsWith("unmark")) {
                 System.out.println(unmark(input));
                 continue;
+            } else if (input.startsWith("deadline") || input.startsWith("todo") || input.startsWith("event")) {
+                System.out.println(handleNewTask(input, input.split(" ")[0]));
             }
-            Nyabot.tasklist.add(new Task(input));
-            System.out.println(Nyabot.prettifyString("added: " + input));
+            //Nyabot.tasklist.add(new Task(input));
+            //System.out.println(Nyabot.prettifyString("added: " + input));
         }
         System.out.println(Nyabot.prettifyString(byestatement));
     }
@@ -86,5 +89,35 @@ public class Nyabot {
                 "\n\t" + tasklist.get(number-1).toString());
 
 
+    }
+
+    public static String handleNewTask(String input, String taskType) {
+        String taskConfirmation = "";
+        try {
+            if (taskType.equals("todo")) {
+                Task task = new ToDo(input.split(" ", 2)[1]);
+                tasklist.add(task);
+                taskConfirmation = task.toString();
+            } else if (taskType.equals("deadline")) {
+                String[] parts = input.split("/by", 2);
+                String taskName = parts[0].split(" ", 2)[1];
+                String deadline = parts[1];
+                Task task = new Deadline(taskName, deadline);
+                tasklist.add(task);
+                taskConfirmation =  task.toString();
+            } else {
+                String[] parts = input.split("/from", 2);
+                String taskName = parts[0].split(" ", 2)[1];
+                String startTime = parts[1].split("/to", 2)[0];
+                String endTime = parts[1].split("/to", 2)[1];
+                Task task = new Event(taskName, startTime, endTime);
+                tasklist.add(task);
+                taskConfirmation =  task.toString();
+            }
+        } catch (Exception e) {
+            return "Sorry, there was an nyerror with entering your task.";
+        }
+        return "\tI've added this task nya!" + "\n\t" + taskConfirmation
+                + " \n\tNyow you have " + tasklist.size() + " task(s) in the list.";
     }
 }
