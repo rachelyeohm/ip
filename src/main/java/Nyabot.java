@@ -4,7 +4,10 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Nyabot {
-
+    enum MarkStatus {
+        MARK,
+        UNMARK;
+    }
     private static ArrayList<Task> tasklist = new ArrayList<Task>();
     public static void main(String[] args) {
 
@@ -24,7 +27,7 @@ public class Nyabot {
                 continue;
             } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
                 try {
-                    System.out.println(mark(input, firstWord.equals("mark")));
+                    System.out.println(mark(input, firstWord.equals("mark") ? MarkStatus.MARK : MarkStatus.UNMARK));
                 }
                 catch (NyabotMissingArgumentException | NyabotIndexOutOfBoundsException e){
                     System.out.println(prettifyString(e.getMessage()));
@@ -72,22 +75,24 @@ public class Nyabot {
        return  prettifyString(textliststring.toString());
     }
 
-    public static String mark(String input, Boolean mark) throws NyabotMissingArgumentException, NyabotIndexOutOfBoundsException {
+    public static String mark(String input, MarkStatus mark) throws NyabotMissingArgumentException, NyabotIndexOutOfBoundsException {
         int number;
 
         try {
             String[] split = input.split(" ", 2);
             if (split.length == 1 || split[1].isEmpty()) {
-                throw new NyabotMissingArgumentException("Valid task number is required for " + (mark ? "mark" : "unmark") + " command nya!");
+                throw new NyabotMissingArgumentException("Valid task number is required for "
+                        + (mark == MarkStatus.MARK ? "mark" : "unmark") + " command nya!");
             }
             number = Integer.parseInt(split[1]);
-            tasklist.get(number-1).setDone(mark);
+            tasklist.get(number-1).setDone(mark == MarkStatus.MARK);
         }  catch (IndexOutOfBoundsException e) {
             throw new NyabotIndexOutOfBoundsException("This task nyumber does not exist!");
         } catch (NumberFormatException e) {
-            throw new NyabotMissingArgumentException("Valid task number is required for " + (mark ? "mark" : "unmark") + " command nya.");
+            throw new NyabotMissingArgumentException("Valid task number is required for "
+                    + (mark == MarkStatus.MARK ? "mark" : "unmark") + " command nya.");
         }
-        return prettifyString("Congrats nya! I've marked this " + (mark ? "" : "un") +
+        return prettifyString("Congrats nya! I've marked this " + (mark == MarkStatus.MARK ? "" : "un") +
                 "done for you. " +
                 "\n\t" + tasklist.get(number-1).toString());
 
