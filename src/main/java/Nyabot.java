@@ -13,9 +13,10 @@ public class Nyabot {
         System.out.println(Nyabot.prettifyString(hellostatement));
 
         Scanner scanner = new Scanner(System.in);
-        while(true) {
+        while(scanner.hasNextLine()) {
             String input = scanner.nextLine();
             if (input.equals("bye")) {
+                System.out.println(Nyabot.prettifyString(byestatement));
                 break;
             } else if (input.equals("list")) {
                 System.out.println(displaylist());
@@ -27,12 +28,12 @@ public class Nyabot {
                 System.out.println(unmark(input));
                 continue;
             } else if (input.startsWith("deadline") || input.startsWith("todo") || input.startsWith("event")) {
-                System.out.println(handleNewTask(input, input.split(" ")[0]));
+                System.out.println(prettifyString(handleNewTask(input, input.split(" ")[0])));
+            } else {
+                System.out.println(prettifyString(input));
             }
-            //Nyabot.tasklist.add(new Task(input));
-            //System.out.println(Nyabot.prettifyString("added: " + input));
         }
-        System.out.println(Nyabot.prettifyString(byestatement));
+
     }
 
     public static String prettifyString(String str) {
@@ -117,7 +118,7 @@ public class Nyabot {
         } catch (Exception e) {
             return "Sorry, there was an nyerror with entering your task.";
         }
-        return "\tI've added this task nya!" + "\n\t" + taskConfirmation
+        return "I've added this task nya!" + "\n\t" + taskConfirmation
                 + " \n\tNyow you have " + tasklist.size() + " task(s) in the list.";
     }
 }
