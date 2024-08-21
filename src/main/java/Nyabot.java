@@ -33,9 +33,20 @@ public class Nyabot {
                 continue;
             } else if (firstWord.equals("deadline") || firstWord.equals("todo") || firstWord.equals("event")) {
                 System.out.println(prettifyString(handleNewTask(input, input.split(" ")[0])));
+                continue;
+            } else if (firstWord.equals("delete")) {
+                try {
+                    System.out.println(prettifyString(delete(input)));
+                }
+                catch (NyabotMissingArgumentException | NyabotIndexOutOfBoundsException e){
+                    System.out.println(prettifyString(e.getMessage()));
+                }
+                continue;
             } else {
                 System.out.println(prettifyString("This is nyot a valid command :("));
             }
+
+
         }
 
     }
@@ -74,7 +85,7 @@ public class Nyabot {
         }  catch (IndexOutOfBoundsException e) {
             throw new NyabotIndexOutOfBoundsException("This task nyumber does not exist!");
         } catch (NumberFormatException e) {
-            throw new NyabotMissingArgumentException("Valid task number for " + (mark ? "mark" : "unmark") + " command");
+            throw new NyabotMissingArgumentException("Valid task number is required for " + (mark ? "mark" : "unmark") + " command nya.");
         }
         return prettifyString("Congrats nya! I've marked this " + (mark ? "" : "un") +
                 "done for you. " +
@@ -138,4 +149,26 @@ public class Nyabot {
         return "I've added this task nya!" + "\n\t" + taskConfirmation
                 + " \n\tNyow you have " + tasklist.size() + " task(s) in the list.";
     }
+
+    public static String delete(String input) throws NyabotMissingArgumentException, NyabotIndexOutOfBoundsException {
+        int number;
+        String taskDescription;
+        try {
+            String[] split = input.split(" ", 2);
+            if (split.length == 1 || split[1].isEmpty()) {
+                throw new NyabotMissingArgumentException("Valid task number is required for delete command nya!");
+            }
+            number = Integer.parseInt(split[1]);
+            taskDescription = tasklist.get(number-1).toString();
+            tasklist.remove(number-1);
+        }  catch (IndexOutOfBoundsException e) {
+            throw new NyabotIndexOutOfBoundsException("This task nyumber does not exist!");
+        } catch (NumberFormatException e) {
+            throw new NyabotMissingArgumentException("Valid task number is required for delete command, nya.");
+        }
+        return "I've deleted! this task nya!" + "\n\t" + taskDescription
+                + " \n\tNyow you have " + tasklist.size() + " task(s) in the list.";
+
+    }
+
 }
