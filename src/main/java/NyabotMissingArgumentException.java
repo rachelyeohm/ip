@@ -1,4 +1,4 @@
-public class NyabotMissingArgumentException extends Exception {
+public class NyabotMissingArgumentException extends NyabotException {
     public NyabotMissingArgumentException(String missingArgument) {
         super(missingArgument);
     }
