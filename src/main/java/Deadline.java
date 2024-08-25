@@ -1,11 +1,22 @@
 import java.util.NoSuchElementException;
 
+
 public class Deadline extends Task {
 
     public Deadline(String task, String deadline) {
         super(task);
         super.setEndTime(deadline);
 
+    }
+
+    public Deadline(String task, boolean isDone, String deadline) {
+        super(task, isDone);
+        super.setEndTime(deadline);
+    }
+
+    @Override
+    public Nyabot.TaskType getTaskType() {
+        return Nyabot.TaskType.DEADLINE;
     }
 
     @Override
@@ -19,7 +30,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        String status = super.getDone() ? "[D][X]" : "[D][ ]";
+        String status = super.isDone() ? "[D][X]" : "[D][ ]";
         return status + " " + super.getTaskName() + " (by: " + super.getEndTime() + ")";
     }
 }

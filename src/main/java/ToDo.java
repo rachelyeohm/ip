@@ -3,7 +3,15 @@ import java.util.NoSuchElementException;
 public class ToDo extends Task {
     public ToDo(String task) {
         super(task);
+    }
 
+    public ToDo(String task, boolean isDone) {
+        super(task, isDone);
+    }
+
+    @Override
+    public Nyabot.TaskType getTaskType() {
+        return Nyabot.TaskType.TODO;
     }
 
     @Override
@@ -28,7 +36,7 @@ public class ToDo extends Task {
 
     @Override
     public String toString() {
-        String status = super.getDone() ? "[T][X]" : "[T][ ]";
+        String status = super.isDone() ? "[T][X]" : "[T][ ]";
         return status + " " + super.getTaskName() ;
     }
 
