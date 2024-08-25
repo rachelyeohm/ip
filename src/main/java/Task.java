@@ -1,22 +1,30 @@
-public class Task {
 
-    private boolean done;
-    private String taskname;
+abstract public class Task {
+
+    private boolean isDone;
+    private String taskName;
 
     private String startTime;
     private String endTime;
 
-    public Task(String taskname) {
-        this.taskname = taskname;
-        this.done = false;
+    public Task(String taskName) {
+        this.taskName = taskName;
+        this.isDone = false;
     }
+
+    public Task(String taskName, boolean isDone) {
+        this.taskName = taskName;
+        this.isDone = isDone;
+    }
+
+    abstract public Nyabot.TaskType getTaskType();
 
     public String getTaskName() {
-        return this.taskname;
+        return this.taskName;
     }
 
-    public boolean getDone() {
-        return this.done;
+    public boolean isDone() {
+        return this.isDone;
     }
 
     public String getStartTime() {return this.startTime;}
@@ -27,12 +35,12 @@ public class Task {
 
     public void setEndTime(String endTime) {this.endTime = endTime;}
 
-    public void setDone(boolean status) {
-        this.done = status;
+    public void setIsDone(boolean status) {
+        this.isDone = status;
     }
 
     @Override
     public String toString() {
-        return this.done ?  "[X] " + this.taskname : "[ ] " + this.taskname;
+        return this.isDone ?  "[X] " + this.taskName : "[ ] " + this.taskName;
     }
 }
