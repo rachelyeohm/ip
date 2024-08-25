@@ -1,12 +1,16 @@
 public class AddCommand extends Command {
     private Task task;
+    private int taskSize;
     public AddCommand(Task task) {
         super();
         this.task = task;
     }
+
     @Override
-    public String successfulMessage() {
-        return "I've added this task nya!" + "\n\t" + taskConfirmation
-                + " \n\tNyow you have " + taskList.size() + " task(s) in the list."
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
+        taskList.addTask(this.task);
+        this.taskSize = taskList.getNumTasks();
+        ui.showMessage("I've added this task nya!" + "\n" + task
+                + " \n\tNyow you have " + taskSize + " task(s) in the list.");
     }
 }

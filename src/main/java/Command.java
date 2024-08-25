@@ -2,10 +2,8 @@ abstract public class Command {
 
     protected boolean isExit = false;
 
-    abstract public void execute();
+    abstract public void execute(TaskList taskList, Ui ui, Storage storage) throws NyabotException;
 
-    abstract public boolean isExit();
-
-    abstract public String successfulMessage();
+    //abstract public String successfulMessage();
 
 }

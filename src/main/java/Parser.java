@@ -8,7 +8,8 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "mark": case"unmark":
-            return new MarkCommand(firstWord.equals("mark"));
+            int number = handleTaskWithTaskNumber(input, firstWord);
+            return new MarkCommand(number, firstWord.equals("mark"));
         case "deadline": case "todo": case "event":
             Nyabot.TaskType taskType =  firstWord.equals("todo")
                     ? Nyabot.TaskType.TODO
