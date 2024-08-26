@@ -1,11 +1,12 @@
+import java.time.LocalDateTime;
 
 abstract public class Task {
 
     private boolean isDone;
     private String taskName;
 
-    private String startTime;
-    private String endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public Task(String taskName) {
         this.taskName = taskName;
@@ -27,13 +28,13 @@ abstract public class Task {
         return this.isDone;
     }
 
-    public String getStartTime() {return this.startTime;}
+    public LocalDateTime getStartTime() {return this.startTime;}
 
-    public String getEndTime() {return this.endTime;}
+    public LocalDateTime getEndTime() {return this.endTime;}
 
-    public void setStartTime(String startTime) {this.startTime = startTime;}
+    public void setStartTime(LocalDateTime startTime) {this.startTime = startTime;}
 
-    public void setEndTime(String endTime) {this.endTime = endTime;}
+    public void setEndTime(LocalDateTime endTime) {this.endTime = endTime;}
 
     public void setIsDone(boolean status) {
         this.isDone = status;

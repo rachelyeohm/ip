@@ -1,14 +1,15 @@
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 public class Event extends Task {
 
-    public Event(String task, String startTime, String endTime) {
+    public Event(String task, LocalDateTime startTime, LocalDateTime endTime) {
         super(task);
         super.setStartTime(startTime);
         super.setEndTime(endTime);
     }
 
-    public Event(String task, boolean isDone, String startTime, String endTime) {
+    public Event(String task, boolean isDone, LocalDateTime startTime, LocalDateTime endTime) {
         super(task, isDone);
         super.setStartTime(startTime);
         super.setEndTime(endTime);
@@ -24,9 +25,16 @@ public class Event extends Task {
     @Override
     public String toString() {
         String status = super.isDone() ? "[E][X]" : "[E][ ]";
-        return status + " " + super.getTaskName()
-                + " (from: " + super.getStartTime() + " to: "
-                + super.getEndTime() + ")";
+        try {
+            return status + " " + super.getTaskName()
+                    + " (from: " + Parser.convertDateToOutput(super.getStartTime()) + " to: "
+                    + Parser.convertDateToOutput(super.getEndTime()) + ")";
+        } catch (NyabotParseException e) {
+            return status + " " + super.getTaskName()
+                    + " (from: " + super.getStartTime() + " to: "
+                    + super.getEndTime() + ")";
+        }
+
     }
 
 }
