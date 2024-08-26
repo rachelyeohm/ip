@@ -17,28 +17,44 @@ public class Nyabot {
         TODO, DEADLINE, EVENT;
     }
 
-    public Nyabot() {
-        this.taskList = new TaskList();
-        this.ui = new Ui();
-        this.storage = new Storage();
-        this.parser = new Parser();
+    public Nyabot(TaskList taskList, Ui ui, Storage storage) {
+        this.taskList = taskList;
+        this.ui = ui;
+        this.storage = storage;
     }
     public static void main(String[] args) {
-
-
-        Storage storage = new Storage("./data/Nyabot.txt", this.ui);
+        Ui ui = new Ui();
         try {
-            taskList = storage.load();
-            System.out.println(prettifyString("Nyabot history has been loaded!"));
-        } catch (NyabotFileNotFoundException | NyabotIOException e) {
-            System.out.println(prettifyString(e.getMessage()));
+            TaskList taskList = new TaskList();
+
+            Storage storage = new Storage("./data/Nyabot.txt", ui);
+            Nyabot nyabot = new Nyabot(taskList, ui, storage);
+            nyabot.run();
+        } catch (NyabotException e) {
+            ui.showMessage(e.getMessage());
         }
 
+    }
+    public void run() {
 
-
-        while(scanner.hasNextLine()) {
-            String input = scanner.nextLine();
-
+        ui.showWelcome();
+        try {
+            new LoadCommand().execute(this.taskList, ui, storage);
+        } catch (NyabotException e) {
+            ui.showMessage(e.getMessage());
+        }
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                Command c = Parser.parse(fullCommand);
+                c.execute(this.taskList, ui, storage);
+                isExit = c.isExit;
+            } catch (NyabotException e) {
+                ui.showMessage(e.getMessage());
+            } finally {
+                ui.getLine();
+            }
         }
 
     }

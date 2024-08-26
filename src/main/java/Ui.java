@@ -22,7 +22,7 @@ public class Ui {
         System.out.println(prettifyString(str));
     }
 
-    public String readMessage() {
+    public String readCommand() {
         return scanner.nextLine();
     }
 }

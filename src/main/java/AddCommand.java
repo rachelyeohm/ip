@@ -11,6 +11,6 @@ public class AddCommand extends Command {
         taskList.addTask(this.task);
         this.taskSize = taskList.getNumTasks();
         ui.showMessage("I've added this task nya!" + "\n" + task
-                + " \n\tNyow you have " + taskSize + " task(s) in the list.");
+                + " \nNyow you have " + taskSize + " task(s) in the list.");
     }
 }

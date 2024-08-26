@@ -1,6 +1,6 @@
 public class Parser {
 
-    public Command parse(String input) throws NyabotException {
+    public static Command parse(String input) throws NyabotException {
         String firstWord = input.split(" ")[0];
         switch(firstWord) {
         case "bye":
@@ -18,8 +18,8 @@ public class Parser {
                     : Nyabot.TaskType.EVENT;
             return parseNewTask(input, taskType);
         case "delete":
-            int number = handleTaskWithTaskNumber(input, "delete");
-            return new DeleteCommand(number);
+            int deleteNumber = handleTaskWithTaskNumber(input, "delete");
+            return new DeleteCommand(deleteNumber);
         case "save":
             return new SaveCommand();
         default:
@@ -28,7 +28,7 @@ public class Parser {
     }
 
 
-    public Command parseNewTask(String input, Nyabot.TaskType taskType) throws NyabotMissingArgumentException, NyabotParseException {
+    public static Command parseNewTask(String input, Nyabot.TaskType taskType) throws NyabotMissingArgumentException, NyabotParseException {
         Task task;
         String[] parts;
         String taskName;
@@ -56,6 +56,7 @@ public class Parser {
             String deadline = parts[1];
             task = new Deadline(taskName.trim(), deadline.trim());
             command = new AddCommand(task);
+            break;
         case EVENT:
             parts = input.split("/from|/to", 3);
             if (parts.length < 3 || parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
@@ -87,7 +88,7 @@ public class Parser {
         return command;
     }
 
-    public int handleTaskWithTaskNumber(String input, String commandName) throws NyabotMissingArgumentException, NyabotIndexOutOfBoundsException {
+    public static int handleTaskWithTaskNumber(String input, String commandName) throws NyabotMissingArgumentException, NyabotIndexOutOfBoundsException {
         try {
             String[] split = input.split(" ", 2);
             if (split.length == 1 || split[1].isEmpty()) {

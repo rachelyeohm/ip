@@ -8,19 +8,21 @@ import java.util.Objects;
 public class Storage {
 
     private String path;
-    public Storage(String path, Ui ui) {
+    public Storage(String path, Ui ui) throws NyabotIOException {
         this.path = path;
         try {
             Files.createDirectories(Paths.get("./data"));
-            System.out.println(prettifyString("'./data' directory was successfully created to store the txt file nya."));
+            ui.showMessage("'./data' directory was successfully created to store the txt file nya.");
         } catch (IOException e) {
-            System.out.println(prettifyString("There was an issue with creating the correct directory " +
-                    "to save the tasks txt file in, nya."));
+            throw new NyabotIOException("There was an issue with creating the correct directory " +
+                    "to save the tasks txt file in, nya.");
         }
+
+
     }
 
-    public ArrayList<Task> load() throws NyabotFileNotFoundException, NyabotIOException {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public TaskList load() throws NyabotFileNotFoundException, NyabotIOException {
+        TaskList taskList = new TaskList();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
@@ -30,13 +32,13 @@ public class Storage {
                 String[] taskArray = line.split(" \\| ");
                 switch(taskArray[0].trim()) {
                 case "T":
-                    tasks.add(new ToDo(taskArray[2], taskArray[1].equals("1")));
+                    taskList.addTask(new ToDo(taskArray[2], taskArray[1].equals("1")));
                     break;
                 case "D":
-                    tasks.add(new Deadline(taskArray[2], taskArray[1].equals("1"), taskArray[3]));
+                    taskList.addTask(new Deadline(taskArray[2], taskArray[1].equals("1"), taskArray[3]));
                     break;
                 case "E":
-                    tasks.add(new Event(taskArray[2], taskArray[1].equals("1"), taskArray[3], taskArray[4]));
+                    taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"), taskArray[3], taskArray[4]));
                     break;
                 }
                 line = br.readLine();
@@ -47,7 +49,7 @@ public class Storage {
         } catch (IOException e) {
             throw new NyabotIOException("Error! Unyable to read the text file.");
         }
-        return tasks;
+        return taskList;
 
     }
 
