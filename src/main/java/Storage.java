@@ -1,39 +1,28 @@
 import java.io.*;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Storage {
 
     private String path;
-    public Storage(String path) {
+    public Storage(String path, Ui ui) throws NyabotIOException {
         this.path = path;
-    }
-
-
-    public String displayTasksSaveable(ArrayList<Task> tasks) {
-        StringBuilder sb = new StringBuilder();
-        for (Task task : tasks) {
-            switch (task.getTaskType()) {
-            case TODO:
-                sb.append("T | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName() + "\n");
-                break;
-            case DEADLINE:
-                sb.append("D | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName())
-                        .append(" | ").append(task.getEndTime()).append("\n");
-                break;
-            case EVENT:
-                sb.append("E | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName())
-                        .append(" | ").append(task.getStartTime())
-                        .append(" | ").append(task.getEndTime()).append("\n");
-                break;
-            }
+        try {
+            Files.createDirectories(Paths.get("./data"));
+            ui.showMessage("'./data' directory was successfully created to store the txt file nya.");
+        } catch (IOException e) {
+            throw new NyabotIOException("There was an issue with creating the correct directory " +
+                    "to save the tasks txt file in, nya.");
         }
-        return sb.toString();
+
+
     }
 
-    public ArrayList<Task> load() throws NyabotFileNotFoundException, NyabotIOException {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public TaskList load() throws NyabotFileNotFoundException, NyabotIOException {
+        TaskList taskList = new TaskList();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
@@ -43,13 +32,13 @@ public class Storage {
                 String[] taskArray = line.split(" \\| ");
                 switch(taskArray[0].trim()) {
                 case "T":
-                    tasks.add(new ToDo(taskArray[2], taskArray[1].equals("1")));
+                    taskList.addTask(new ToDo(taskArray[2], taskArray[1].equals("1")));
                     break;
                 case "D":
-                    tasks.add(new Deadline(taskArray[2], taskArray[1].equals("1"), taskArray[3]));
+                    taskList.addTask(new Deadline(taskArray[2], taskArray[1].equals("1"), taskArray[3]));
                     break;
                 case "E":
-                    tasks.add(new Event(taskArray[2], taskArray[1].equals("1"), taskArray[3], taskArray[4]));
+                    taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"), taskArray[3], taskArray[4]));
                     break;
                 }
                 line = br.readLine();
@@ -60,20 +49,18 @@ public class Storage {
         } catch (IOException e) {
             throw new NyabotIOException("Error! Unyable to read the text file.");
         }
-        return tasks;
+        return taskList;
 
     }
 
-    public String save(ArrayList<Task> tasks) throws NyabotFileNotFoundException {
+    public void save(TaskList taskList) throws NyabotFileNotFoundException {
         try {
             PrintWriter writer = new PrintWriter(path);
-            writer.println(displayTasksSaveable(tasks));
+            writer.println(taskList.displayTasksSaveable());
             writer.close();
         } catch (FileNotFoundException e) {
             throw new NyabotFileNotFoundException("Unyable to save. There was an nyerror in finding the file to save in :(");
         }
-        return "Saved successfully, nya!";
-
     }
 
 }
