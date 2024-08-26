@@ -1,10 +1,11 @@
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Scanner;
+import command.Command;
+import command.LoadCommand;
+import components.Parser;
+import components.Storage;
+import components.Ui;
+import exception.NyabotException;
+import task.TaskList;
 
 public class Nyabot {
 
@@ -13,9 +14,7 @@ public class Nyabot {
     private Storage storage;
     private Parser parser;
 
-    public enum TaskType {
-        TODO, DEADLINE, EVENT;
-    }
+
 
     public Nyabot(TaskList taskList, Ui ui, Storage storage) {
         this.taskList = taskList;
@@ -49,7 +48,7 @@ public class Nyabot {
                 String fullCommand = ui.readCommand();
                 Command c = Parser.parse(fullCommand);
                 c.execute(this.taskList, ui, storage);
-                isExit = c.isExit;
+                isExit = c.isExit();
             } catch (NyabotException e) {
                 ui.showMessage(e.getMessage());
             } finally {

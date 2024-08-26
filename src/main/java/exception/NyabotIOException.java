@@ -1,4 +1,4 @@
-import java.io.IOException;
+package exception;
 
 public class NyabotIOException extends NyabotException {
     public NyabotIOException(String str) {

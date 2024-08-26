@@ -1,3 +1,8 @@
+package command;
+import components.Storage;
+import components.Ui;
+import task.Task;
+import task.TaskList;
 public class AddCommand extends Command {
     private Task task;
     private int taskSize;

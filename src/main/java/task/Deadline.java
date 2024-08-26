@@ -1,3 +1,7 @@
+package task;
+
+import components.Parser;
+import exception.NyabotParseException;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
@@ -16,8 +20,8 @@ public class Deadline extends Task {
     }
 
     @Override
-    public Nyabot.TaskType getTaskType() {
-        return Nyabot.TaskType.DEADLINE;
+    public TaskType getTaskType() {
+        return TaskType.DEADLINE;
     }
 
     @Override

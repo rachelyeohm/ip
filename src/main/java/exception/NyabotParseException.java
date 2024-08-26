@@ -1,3 +1,5 @@
+package exception;
+
 public class NyabotParseException extends NyabotException {
 
     public NyabotParseException(String str) {
