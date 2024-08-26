@@ -1,3 +1,5 @@
+package task;
+
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
@@ -11,8 +13,8 @@ public class ToDo extends Task {
     }
 
     @Override
-    public Nyabot.TaskType getTaskType() {
-        return Nyabot.TaskType.TODO;
+    public TaskType getTaskType() {
+        return TaskType.TODO;
     }
 
     @Override

@@ -1,3 +1,8 @@
+package command;
+import components.Storage;
+import components.Ui;
+import task.TaskList;
+
 public class DeleteCommand extends Command {
     private int taskNumber;
     private String taskDescription;

@@ -1,6 +1,12 @@
+package task;
+
 import java.time.LocalDateTime;
 
 abstract public class Task {
+
+    public enum TaskType {
+        TODO, DEADLINE, EVENT;
+    }
 
     private boolean isDone;
     private String taskName;
@@ -18,7 +24,7 @@ abstract public class Task {
         this.isDone = isDone;
     }
 
-    abstract public Nyabot.TaskType getTaskType();
+    abstract public TaskType getTaskType();
 
     public String getTaskName() {
         return this.taskName;

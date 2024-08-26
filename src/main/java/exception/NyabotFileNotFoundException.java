@@ -1,4 +1,4 @@
-import java.io.FileNotFoundException;
+package exception;
 
 public class NyabotFileNotFoundException extends NyabotException {
     public NyabotFileNotFoundException(String str) {

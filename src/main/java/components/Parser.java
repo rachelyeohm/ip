@@ -1,5 +1,14 @@
+package components;
+
+import command.*;
+import exception.*;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.ToDo;
+import task.Task.TaskType;
+
 import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,11 +26,11 @@ public class Parser {
             int number = handleTaskWithTaskNumber(input, firstWord);
             return new MarkCommand(number, firstWord.equals("mark"));
         case "deadline": case "todo": case "event":
-            Nyabot.TaskType taskType =  firstWord.equals("todo")
-                    ? Nyabot.TaskType.TODO
+            task.Task.TaskType taskType =  firstWord.equals("todo")
+                    ? task.Task.TaskType.TODO
                     : firstWord.equals("deadline")
-                    ? Nyabot.TaskType.DEADLINE
-                    : Nyabot.TaskType.EVENT;
+                    ? task.Task.TaskType.DEADLINE
+                    : task.Task.TaskType.EVENT;
             return parseNewTask(input, taskType);
         case "delete":
             int deleteNumber = handleTaskWithTaskNumber(input, "delete");
@@ -34,7 +43,7 @@ public class Parser {
     }
 
 
-    public static Command parseNewTask(String input, Nyabot.TaskType taskType) throws NyabotException {
+    public static Command parseNewTask(String input, task.Task.TaskType taskType) throws NyabotException {
         Task task;
         String[] parts;
         String taskName;

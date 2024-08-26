@@ -1,5 +1,8 @@
+package task;
+
+import components.Parser;
+import exception.NyabotParseException;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 
 public class Event extends Task {
 
@@ -17,8 +20,8 @@ public class Event extends Task {
 
 
     @Override
-    public Nyabot.TaskType getTaskType() {
-        return Nyabot.TaskType.EVENT;
+    public TaskType getTaskType() {
+        return TaskType.EVENT;
     }
 
 
