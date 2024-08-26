@@ -1,3 +1,9 @@
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
 
     public static Command parse(String input) throws NyabotException {
@@ -28,7 +34,7 @@ public class Parser {
     }
 
 
-    public static Command parseNewTask(String input, Nyabot.TaskType taskType) throws NyabotMissingArgumentException, NyabotParseException {
+    public static Command parseNewTask(String input, Nyabot.TaskType taskType) throws NyabotException {
         Task task;
         String[] parts;
         String taskName;
@@ -54,7 +60,7 @@ public class Parser {
                 throw new NyabotMissingArgumentException("Valid deadline name required nya!");
             }
             String deadline = parts[1];
-            task = new Deadline(taskName.trim(), deadline.trim());
+            task = new Deadline(taskName.trim(), Parser.convertInputToDate(deadline.trim()));
             command = new AddCommand(task);
             break;
         case EVENT:
@@ -78,7 +84,12 @@ public class Parser {
             }
             String startTime = fromFirst ? parts[1].trim() : parts[2].trim();
             String endTime = fromFirst ? parts[2].trim() : parts[1].trim();
-            task = new Event(taskName.trim(), startTime.trim(), endTime.trim());
+            LocalDateTime startTimeDate = Parser.convertInputToDate(startTime.trim());
+            LocalDateTime endTimeDate = Parser.convertInputToDate(endTime.trim());
+            if (endTimeDate.isBefore(startTimeDate)) {
+                throw new NyabotDateException("Start date cannot be after end date!");
+            }
+            task = new Event(taskName.trim(), startTimeDate, endTimeDate);
             command = new AddCommand(task);
             break;
         default:
@@ -101,6 +112,37 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new NyabotMissingArgumentException("Valid task number is required for " +
                     commandName + " command, nya.");
+        }
+
+    }
+
+    public static LocalDateTime convertInputToDate(String string) throws NyabotParseException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return LocalDateTime.parse(string, formatter);
+        } catch (DateTimeParseException e) {
+            throw new NyabotParseException("Nya, we can't parse your date!");
+        }
+
+    }
+
+    public static LocalDateTime convertTxtInputToDate(String string) throws NyabotParseException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+            return LocalDateTime.parse(string, formatter);
+        } catch (DateTimeParseException e) {
+            throw new NyabotParseException("Nya, we can't parse your date!");
+        }
+
+    }
+
+
+
+    public static String convertDateToOutput(LocalDateTime date) throws NyabotParseException {
+        try {
+            return date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma"));
+        } catch (DateTimeException e) {
+            throw new NyabotParseException("Nya, we can't parse your date!");
         }
 
     }

@@ -26,7 +26,7 @@ public class TaskList {
         return textliststring.toString();
     }
 
-    public String displayTasksSaveable() {
+    public String displayTasksSaveable() throws NyabotException {
         StringBuilder sb = new StringBuilder();
         for (Task task : taskList) {
             switch (task.getTaskType()) {
@@ -34,13 +34,16 @@ public class TaskList {
                 sb.append("T | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName() + "\n");
                 break;
             case DEADLINE:
+                String endTime = Parser.convertDateToOutput(task.getEndTime());
                 sb.append("D | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName())
-                        .append(" | ").append(task.getEndTime()).append("\n");
+                        .append(" | ").append(endTime).append("\n");
                 break;
             case EVENT:
+                String start = Parser.convertDateToOutput(task.getStartTime());
+                String end = Parser.convertDateToOutput(task.getEndTime());
                 sb.append("E | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName())
-                        .append(" | ").append(task.getStartTime())
-                        .append(" | ").append(task.getEndTime()).append("\n");
+                        .append(" | ").append(start)
+                        .append(" | ").append(end).append("\n");
                 break;
             }
         }

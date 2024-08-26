@@ -21,7 +21,7 @@ public class Storage {
 
     }
 
-    public TaskList load() throws NyabotFileNotFoundException, NyabotIOException {
+    public TaskList load() throws NyabotException {
         TaskList taskList = new TaskList();
 
         try {
@@ -35,10 +35,14 @@ public class Storage {
                     taskList.addTask(new ToDo(taskArray[2], taskArray[1].equals("1")));
                     break;
                 case "D":
-                    taskList.addTask(new Deadline(taskArray[2], taskArray[1].equals("1"), taskArray[3]));
+                    taskList.addTask(new Deadline(taskArray[2],
+                            taskArray[1].equals("1"),
+                            Parser.convertTxtInputToDate(taskArray[3].trim())));
                     break;
                 case "E":
-                    taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"), taskArray[3], taskArray[4]));
+                    taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"),
+                            Parser.convertTxtInputToDate(taskArray[3].trim()),
+                            Parser.convertTxtInputToDate(taskArray[4].trim())));
                     break;
                 }
                 line = br.readLine();
@@ -53,7 +57,7 @@ public class Storage {
 
     }
 
-    public void save(TaskList taskList) throws NyabotFileNotFoundException {
+    public void save(TaskList taskList) throws NyabotException {
         try {
             PrintWriter writer = new PrintWriter(path);
             writer.println(taskList.displayTasksSaveable());

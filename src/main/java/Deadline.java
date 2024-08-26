@@ -1,15 +1,16 @@
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 
 public class Deadline extends Task {
 
-    public Deadline(String task, String deadline) {
+    public Deadline(String task, LocalDateTime deadline) throws NoSuchElementException {
         super(task);
         super.setEndTime(deadline);
 
     }
 
-    public Deadline(String task, boolean isDone, String deadline) {
+    public Deadline(String task, boolean isDone, LocalDateTime deadline) {
         super(task, isDone);
         super.setEndTime(deadline);
     }
@@ -20,17 +21,24 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String getStartTime() throws NoSuchElementException {
+    public LocalDateTime getStartTime() throws NoSuchElementException {
         throw new NoSuchElementException("A deadline does not have a start time");
     }
     @Override
-    public void setStartTime(String startTime) throws NoSuchElementException {
+    public void setStartTime(LocalDateTime startTime) throws NoSuchElementException {
         throw new NoSuchElementException("Cannot set start time on a deadline");
     }
 
     @Override
     public String toString() {
         String status = super.isDone() ? "[D][X]" : "[D][ ]";
-        return status + " " + super.getTaskName() + " (by: " + super.getEndTime() + ")";
+        try {
+            return status + " " + super.getTaskName() + " (by: " +
+                    Parser.convertDateToOutput(super.getEndTime()) + ")";
+        } catch (NyabotParseException e) {
+            return status + " " + super.getTaskName() + " (by: " +
+                    super.getEndTime() + ")";
+        }
+
     }
 }

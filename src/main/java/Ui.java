@@ -15,7 +15,10 @@ public class Ui {
     }
 
     public void showWelcome() {
-        System.out.println(prettifyString("Hello! I'm Nyabot. What can I do for you, nya?"));
+        System.out.println(prettifyString(
+                "Hello! I'm Nyabot. What can I do for you, nya?.\n" +
+                        "For deadlines and events, dates should be written in yyyy-MM-dd HH:mm. " +
+                        "For example, you can write 2019-12-27 18:00."));
     }
 
     public void showMessage(String str) {
