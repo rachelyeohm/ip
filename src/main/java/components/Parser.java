@@ -25,6 +25,9 @@ public class Parser {
         case "mark": case"unmark":
             int number = handleTaskWithTaskNumber(input, firstWord);
             return new MarkCommand(number, firstWord.equals("mark"));
+        case "find":
+            String searchTerm = parseTaskWithWord(input, "find");
+            return new FindCommand(searchTerm);
         case "deadline": case "todo": case "event":
             task.Task.TaskType taskType =  firstWord.equals("todo")
                     ? task.Task.TaskType.TODO
@@ -40,6 +43,14 @@ public class Parser {
         default:
             throw new NyabotNoSuchCommandException("Nya, there is no such command!");
         }
+    }
+
+    public static String parseTaskWithWord(String input, String command) throws NyabotMissingArgumentException {
+        String[] parts = input.split(" ", 2);
+        if (parts.length == 1 || parts[1].trim().isEmpty()) {
+            throw new NyabotMissingArgumentException("Valid " + command + " name required nya!");
+        }
+        return parts[1].trim();
     }
 
 

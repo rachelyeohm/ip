@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 public class TaskList {
-    private static ArrayList<Task> taskList = new ArrayList<Task>();
+    private ArrayList<Task> taskList = new ArrayList<Task>();
 
     public void addTask(Task task) {
         taskList.add(task);
