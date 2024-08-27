@@ -15,17 +15,25 @@ import java.nio.file.Paths;
 public class Storage {
 
     private String path;
+    private String directory;
     public Storage(String path, Ui ui) throws NyabotIOException {
         this.path = path;
+        createDirectory(path, ui);
+    }
+
+    public void createDirectory(String path, Ui ui) throws NyabotIOException {
         try {
-            Files.createDirectories(Paths.get("./data"));
-            ui.showMessage("'./data' directory was successfully created to store the txt file nya.");
-        } catch (IOException e) {
+            Files.createDirectories(Paths.get(path.substring(0, path.lastIndexOf("/"))));
+            this.directory = path.substring(0, path.lastIndexOf("/"));
+            ui.showMessage("Directory was successfully created to store the txt file nya.");
+        } catch (IOException | StringIndexOutOfBoundsException e) {
             throw new NyabotIOException("There was an issue with creating the correct directory " +
                     "to save the tasks txt file in, nya.");
         }
+    }
 
-
+    public String getDirectory() {
+        return this.directory;
     }
 
     public TaskList load() throws NyabotException {
@@ -67,7 +75,7 @@ public class Storage {
     public void save(TaskList taskList) throws NyabotException {
         try {
             PrintWriter writer = new PrintWriter(path);
-            writer.println(taskList.displayTasksSaveable());
+            writer.print(taskList.displayTasksSaveable());
             writer.close();
         } catch (FileNotFoundException e) {
             throw new NyabotFileNotFoundException("Unyable to save. There was an nyerror in finding the file to save in :(");
