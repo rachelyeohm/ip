@@ -18,4 +18,8 @@ public class AddCommand extends Command {
         ui.showMessage("I've added this task nya!" + "\n" + task
                 + " \nNyow you have " + taskSize + " task(s) in the list.");
     }
+
+    public Task getTask() {
+        return this.task;
+    }
 }
