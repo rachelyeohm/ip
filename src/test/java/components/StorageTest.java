@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
     @Test
-    public void createDirectory_correct() throws NyabotException {
+    public void createDirectory_expectedBehavior() throws NyabotException {
         Ui ui = new Ui();
         Storage storage = new Storage("./data/Nyabot.txt", ui);
         File directory = new File(storage.getDirectory());
@@ -25,7 +25,7 @@ public class StorageTest {
     }
 
     @Test
-    public void getStartTime_throwsException() {
+    public void getStartTime_exceptionThrown() {
         try {
             Task task = new ToDo("1");
             task.getStartTime();
@@ -36,7 +36,7 @@ public class StorageTest {
     }
 
     @Test
-    public void getEndTime_throwsException() {
+    public void getEndTime_exceptionThrown() {
         try {
             Task task = new ToDo("1");
             task.getEndTime();
@@ -47,7 +47,7 @@ public class StorageTest {
     }
 
     @Test
-    public void setStartTime_throwsException() {
+    public void setStartTime_exceptionThrown() {
         try {
             Task task = new ToDo("1");
             task.getStartTime();
@@ -58,7 +58,7 @@ public class StorageTest {
     }
 
     @Test
-    public void setEndTime_throwsException() {
+    public void setEndTime_exceptionThrown() {
         try {
             Task task = new ToDo("1");
             task.getStartTime();

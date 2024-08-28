@@ -1,6 +1,7 @@
 package command;
 import components.Storage;
 import components.Ui;
+import exception.NyabotIndexOutOfBoundsException;
 import task.TaskList;
 
 /**
@@ -20,13 +21,19 @@ public class DeleteCommand extends Command {
      * @param taskList TaskList object to add the task to.
      * @param ui Ui object for interacting with user.
      * @param storage Storage object for loading and saving data.
+     * @throws NyabotIndexOutOfBoundsException If task number is not in TaskList.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) {
-        taskList.deleteTask(this.taskNumber);
-        this.taskDescription = taskList.getTask(taskNumber-1).toString();
-        this.taskSize = taskList.getNumTasks();
-        ui.showMessage("I've deleted! this task nya!" + "\n" + this.taskDescription
-                + " \nNyow you have " + this.taskSize + " task(s) in the list.");
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
+        try {
+            this.taskDescription = taskList.getTask(taskNumber-1).toString();
+            taskList.deleteTask(this.taskNumber-1);
+            this.taskSize = taskList.getNumTasks();
+            ui.showMessage("I've deleted this task nya!" + "\n" + this.taskDescription
+                    + " \nNyow you have " + this.taskSize + " task(s) in the list.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new NyabotIndexOutOfBoundsException("This task number does not exist nya!");
+        }
+
     }
 }

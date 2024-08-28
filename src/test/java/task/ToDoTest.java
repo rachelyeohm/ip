@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ToDoTest {
     @Test
-    public void createDirectory_correct() throws NyabotException {
+    public void createDirectory_exceptionThrown() throws NyabotException {
         Ui ui = new Ui();
         Storage storage = new Storage("./data/Nyabot.txt", ui);
         File directory = new File(storage.getDirectory());
@@ -20,7 +20,7 @@ public class ToDoTest {
     }
 
     @Test
-    public void createDirectory_wrongDirectory() {
+    public void createDirectory_wrongDirectory_exceptionThrown() {
         try {
             Ui ui = new Ui();
             Storage storage = new Storage("", ui);
