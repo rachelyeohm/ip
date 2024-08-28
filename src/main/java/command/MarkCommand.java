@@ -1,6 +1,7 @@
 package command;
 import components.Storage;
 import components.Ui;
+import exception.NyabotIndexOutOfBoundsException;
 import task.Task;
 import task.TaskList;
 
@@ -22,14 +23,19 @@ public class MarkCommand extends Command {
      * @param taskList TaskList object to add the task to.
      * @param ui Ui object for interacting with user.
      * @param storage Storage object for loading and saving data.
+     * @throws NyabotIndexOutOfBoundsException If task number is not in TaskList.
      */
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) {
-        Task task = taskList.getTask(taskNumber-1);
-        task.setIsDone(isMark);
-        ui.showMessage("I've marked this " + (isMark ? "" : "un") +
-                "done for you nya. " +
-                "\n" + task.toString());
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
+        try {
+            Task task = taskList.getTask(taskNumber-1);
+            task.setDone(isMark);
+            ui.showMessage("I've marked this " + (isMark ? "" : "un") +
+                    "done for you nya. " +
+                    "\n" + task.toString());
+        } catch (IndexOutOfBoundsException e) {
+            throw new NyabotIndexOutOfBoundsException("This task number does not exist nya!");
+        }
     }
 }

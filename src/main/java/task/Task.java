@@ -85,7 +85,7 @@ abstract public class Task {
      *
      * @param status New status of whether the task is done or not.
      */
-    public void setIsDone(boolean status) {
+    public void setDone(boolean status) {
         this.isDone = status;
     }
 

@@ -18,6 +18,7 @@ public class TaskList {
         taskList.remove(task);
     }
     public void deleteTask(int taskNumber) {
+
         taskList.remove(taskNumber);
     }
 
