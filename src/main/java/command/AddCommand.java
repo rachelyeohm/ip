@@ -3,6 +3,10 @@ import components.Storage;
 import components.Ui;
 import task.Task;
 import task.TaskList;
+
+/**
+ * Represents a command to add task to the TaskList.
+ */
 public class AddCommand extends Command {
     private Task task;
     private int taskSize;
@@ -11,6 +15,12 @@ public class AddCommand extends Command {
         this.task = task;
     }
 
+    /**
+     * Returns nothing. Executes adding a task to the TaskList.
+     * @param taskList TaskList object to add the task to.
+     * @param ui Ui object for interacting with user.
+     * @param storage Storage object for loading and saving data.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         taskList.addTask(this.task);
