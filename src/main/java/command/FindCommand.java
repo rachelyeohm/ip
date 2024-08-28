@@ -21,8 +21,10 @@ public class FindCommand extends Command {
             if (task.getTaskName().contains(searchTerm)) {
                 taskList1.addTask(task);
             }
+
         }
         ui.showMessage("Here are the matching tyasks in your list nya!\n" +
                 taskList1.displayTasks());
     }
 }
+

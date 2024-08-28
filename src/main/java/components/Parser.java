@@ -13,8 +13,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a handler that parses user input.
+ */
 public class Parser {
-
+    /**
+     * Returns a Command object that can execute the user input.
+     *
+     * @param input Input by user.
+     * @return Command to be executed based on input.
+     * @throws NyabotException If exception arises during parsing. Examples include
+     * NyabotNoSuchCommandException when there is no relevant command.
+     */
     public static Command parse(String input) throws NyabotException {
         String firstWord = input.split(" ")[0];
         switch(firstWord) {
@@ -45,16 +55,37 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns string of words the user wrote after they wrote the command name.
+     *
+     * @param input Input by user that has a variable series of words after the command name.
+     * @param command Command name as listed in the input.
+     * @return Words after the command name in the input.
+     * @throws NyabotMissingArgumentException If no content is written after the command
+     * in the input.
+     */
     public static String parseTaskWithWord(String input, String command) throws NyabotMissingArgumentException {
         String[] parts = input.split(" ", 2);
         if (parts.length == 1 || parts[1].trim().isEmpty()) {
-            throw new NyabotMissingArgumentException("Valid " + command + " name required nya!");
+            throw new NyabotMissingArgumentException("Valid " + command + " name and content " +
+                    "required nya!");
         }
         return parts[1].trim();
     }
 
 
-    public static Command parseNewTask(String input, task.Task.TaskType taskType) throws NyabotException {
+    /**
+     * Returns Command object that can be used to execute user input.
+     *
+     * @param input Input string by user.
+     * @param taskType Type of task (todo, deadline, event).
+     * @return AddCommand to add the task.
+     * @throws NyabotMissingArgumentException If content of command is not written.
+     * @throws NyabotParseException If task is none of the three defined task types.
+     * @throws NyabotDateException If start date is after end date in event task type.
+     */
+    public static Command parseNewTask(String input, task.Task.TaskType taskType) throws
+            NyabotMissingArgumentException, NyabotParseException, NyabotDateException {
         Task task;
         String[] parts;
         String taskName;
@@ -64,7 +95,7 @@ public class Parser {
 
             parts = input.split(" ", 2);
             if (parts.length == 1 || parts[1].trim().isEmpty()) {
-                throw new NyabotMissingArgumentException("Valid todo name required nya!");
+                throw new NyabotMissingArgumentException("Valid todo command content required nya!");
             }
             task = new ToDo(parts[1].trim());
             command = new AddCommand(task);
@@ -77,7 +108,7 @@ public class Parser {
             }
             taskName = parts[0].split(" ", 2)[1];
             if (taskName.trim().isEmpty()) {
-                throw new NyabotMissingArgumentException("Valid deadline name required nya!");
+                throw new NyabotMissingArgumentException("Valid deadline command content required nya!");
             }
             String deadline = parts[1];
             task = new Deadline(taskName.trim(), Parser.convertInputToDate(deadline.trim()));
@@ -100,7 +131,7 @@ public class Parser {
             }
             taskName = parts[0].split(" ", 2)[1];
             if (taskName.trim().isEmpty()) {
-                throw new NyabotMissingArgumentException("Valid deadline name required nya!");
+                throw new NyabotMissingArgumentException("Valid event command content required nya!");
             }
             String startTime = fromFirst ? parts[1].trim() : parts[2].trim();
             String endTime = fromFirst ? parts[2].trim() : parts[1].trim();
@@ -119,6 +150,15 @@ public class Parser {
         return command;
     }
 
+    /**
+     * Returns task number that the user inputted.
+     *
+     * @param input Input string by user.
+     * @param commandName Name of command.
+     * @return Number of task.
+     * @throws NyabotMissingArgumentException If no task number if provided.
+     * @throws NyabotIndexOutOfBoundsException If task number provided is invalid.
+     */
     public static int handleTaskWithTaskNumber(String input, String commandName) throws NyabotMissingArgumentException, NyabotIndexOutOfBoundsException {
         try {
             String[] split = input.split(" ", 2);
@@ -136,6 +176,13 @@ public class Parser {
 
     }
 
+    /**
+     * Returns date in LocalDateTime object form.
+     *
+     * @param string Date in string form, in the format of the user input.
+     * @return LocalDateTime object representation of date.
+     * @throws NyabotParseException If date is in the wrong format and cannot be parsed.
+     */
     public static LocalDateTime convertInputToDate(String string) throws NyabotParseException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -146,6 +193,13 @@ public class Parser {
 
     }
 
+    /**
+     * Returns date in LocalDateTime format.
+     *
+     * @param string Date in string form, in the format of the preloaded text file.
+     * @return LocalDateTime object representation of date.
+     * @throws NyabotParseException If date is in the wrong format and cannot be parsed.
+     */
     public static LocalDateTime convertTxtInputToDate(String string) throws NyabotParseException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
@@ -157,7 +211,13 @@ public class Parser {
     }
 
 
-
+    /**
+     * Returns date in string MM/dd/yyyy hh:mma format.
+     *
+     * @param date LocalDateTime object representation of date.
+     * @return Date string in MM/dd/yyyy hh:mma format.
+     * @throws NyabotParseException if date cannot be parsed.
+     */
     public static String convertDateToOutput(LocalDateTime date) throws NyabotParseException {
         try {
             return date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma"));
