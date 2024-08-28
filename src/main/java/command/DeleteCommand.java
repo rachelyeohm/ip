@@ -3,6 +3,9 @@ import components.Storage;
 import components.Ui;
 import task.TaskList;
 
+/**
+ * Represents a command to delete a task from the TaskList.
+ */
 public class DeleteCommand extends Command {
     private int taskNumber;
     private String taskDescription;
@@ -12,6 +15,12 @@ public class DeleteCommand extends Command {
         this.taskNumber = taskNumber;
     }
 
+    /**
+     * Returns nothing. Executes deleting a task from the TaskList.
+     * @param taskList TaskList object to add the task to.
+     * @param ui Ui object for interacting with user.
+     * @param storage Storage object for loading and saving data.
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         taskList.deleteTask(this.taskNumber);
