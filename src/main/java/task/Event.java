@@ -4,6 +4,10 @@ import components.Parser;
 import exception.NyabotParseException;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a type of task called an event.
+ */
+
 public class Event extends Task {
 
     public Event(String task, LocalDateTime startTime, LocalDateTime endTime) {
@@ -18,7 +22,11 @@ public class Event extends Task {
         super.setEndTime(endTime);
     }
 
-
+    /**
+     * Returns the type of the task, an event.
+     *
+     * @return TaskType enum object signifying the task type is an event.
+     */
     @Override
     public TaskType getTaskType() {
         return TaskType.EVENT;

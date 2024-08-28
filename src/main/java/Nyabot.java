@@ -7,14 +7,16 @@ import components.Ui;
 import exception.NyabotException;
 import task.TaskList;
 
+/**
+ * Represents a chatbot instance.
+ *
+ */
 public class Nyabot {
 
     private TaskList taskList;
     private Ui ui;
     private Storage storage;
     private Parser parser;
-
-
 
     public Nyabot(TaskList taskList, Ui ui, Storage storage) {
         this.taskList = taskList;
@@ -34,6 +36,10 @@ public class Nyabot {
         }
 
     }
+
+    /**
+     * Returns nothing.
+     */
     public void run() {
 
         ui.showWelcome();

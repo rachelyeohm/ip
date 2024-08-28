@@ -2,11 +2,13 @@ package task;
 
 import components.Parser;
 import exception.NyabotException;
+import exception.NyabotParseException;
+
 import java.util.ArrayList;
 
 
 public class TaskList {
-    private static ArrayList<Task> taskList = new ArrayList<Task>();
+    private ArrayList<Task> taskList = new ArrayList<Task>();
 
     public void addTask(Task task) {
         taskList.add(task);
@@ -31,7 +33,7 @@ public class TaskList {
         return textliststring.toString();
     }
 
-    public String displayTasksSaveable() throws NyabotException {
+    public String displayTasksSaveable() throws NyabotParseException {
         StringBuilder sb = new StringBuilder();
         for (Task task : taskList) {
             switch (task.getTaskType()) {
