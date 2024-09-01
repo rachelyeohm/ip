@@ -22,11 +22,11 @@ public class AddCommand extends Command {
      * @param storage Storage object for loading and saving data.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage) {
         taskList.addTask(this.task);
         this.taskSize = taskList.getNumTasks();
-        ui.showMessage("I've added this task nya!" + "\n" + task
-                + " \nNyow you have " + taskSize + " task(s) in the list.");
+        return "I've added this task nya!" + "\n" + task
+                + " \nNyow you have " + taskSize + " task(s) in the list.";
     }
 
     public Task getTask() {

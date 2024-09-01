@@ -34,11 +34,11 @@ public class Ui {
     /**
      * Outputs a welcome message to the user.
      */
-    public void showWelcome() {
-        System.out.println(prettifyString(
+    public String showWelcome() {
+        return
                 "Hello! I'm Nyabot. What can I do for you, nya?.\n" +
                         "For deadlines and events, dates should be written in yyyy-MM-dd HH:mm. " +
-                        "For example, you can write 2019-12-27 18:00."));
+                        "For example, you can write 2019-12-27 18:00.";
     }
 
     /**
@@ -46,8 +46,9 @@ public class Ui {
      *
      * @param str Message to be shown to user.
      */
-    public void showMessage(String str) {
+    public String showMessage(String str) {
         System.out.println(prettifyString(str));
+        return str;
     }
 
     /**

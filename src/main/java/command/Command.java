@@ -27,7 +27,7 @@ abstract public class Command {
      * @param ui Ui object for interacting with user.
      * @param storage Storage object for loading and saving data.
      */
-    abstract public void execute(TaskList taskList, Ui ui, Storage storage) throws NyabotException;
+    abstract public String execute(TaskList taskList, Ui ui, Storage storage) throws NyabotException;
 
 
 }

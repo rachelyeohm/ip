@@ -19,9 +19,9 @@ public class SaveCommand extends Command {
      * saving.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage)
+    public String execute(TaskList taskList, Ui ui, Storage storage)
             throws NyabotException {
         storage.save(taskList);
-        ui.showMessage("Saved successfully, nya!");
+        return "Saved successfully, nya!";
     }
 }

@@ -17,10 +17,15 @@ public class LoadCommand extends Command {
      * @throws NyabotException If unexpected exception occurs when loading.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage)
+    public String execute(TaskList taskList, Ui ui, Storage storage)
             throws NyabotException {
-        taskList = storage.load();
-        ui.showMessage("Nyabot history has been loaded!");
+        try {
+            taskList.replaceTasks(storage.load());
+            return "Nyabot history has been loaded!";
+        } catch (NyabotException e) {
+            return e.getMessage();
+        }
+
 
     }
 }
