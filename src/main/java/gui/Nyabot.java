@@ -1,3 +1,4 @@
+package gui;
 
 import command.Command;
 import command.LoadCommand;
@@ -18,23 +19,27 @@ public class Nyabot {
     private Storage storage;
     private Parser parser;
 
-    public Nyabot(TaskList taskList, Ui ui, Storage storage) {
-        this.taskList = taskList;
-        this.ui = ui;
-        this.storage = storage;
-    }
-    public static void main(String[] args) {
+    public Nyabot() {
         Ui ui = new Ui();
         try {
             TaskList taskList = new TaskList();
-
             Storage storage = new Storage("./data/Nyabot.txt", ui);
-            Nyabot nyabot = new Nyabot(taskList, ui, storage);
-            nyabot.run();
+            this.taskList = taskList;
+            this.ui = ui;
+            this.storage = storage;
         } catch (NyabotException e) {
             ui.showMessage(e.getMessage());
         }
 
+    }
+    public static void main(String[] args) {
+        Nyabot nyabot = new Nyabot();
+        nyabot.run();
+
+    }
+
+    public Ui getUi() {
+        return this.ui;
     }
 
     /**
@@ -42,7 +47,7 @@ public class Nyabot {
      */
     public void run() {
 
-        ui.showWelcome();
+        ui.showMessage(ui.showWelcome());
         try {
             new LoadCommand().execute(this.taskList, ui, storage);
         } catch (NyabotException e) {
@@ -53,7 +58,7 @@ public class Nyabot {
             try {
                 String fullCommand = ui.readCommand();
                 Command c = Parser.parse(fullCommand);
-                c.execute(this.taskList, ui, storage);
+                ui.showMessage(c.execute(this.taskList, ui, storage));
                 isExit = c.isExit();
             } catch (NyabotException e) {
                 ui.showMessage(e.getMessage());
@@ -64,10 +69,31 @@ public class Nyabot {
 
     }
 
+    public String tryLoad() {
+        try {
+            return new LoadCommand().execute(this.taskList, ui, storage);
+        } catch (NyabotException e) {
+            return e.getMessage();
+        }
+    }
 
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(this.taskList, ui, storage);
 
+        } catch (NyabotException e) {
+            return ui.showMessage(e.getMessage());
+        }
+    }
 
+    public boolean isExit(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.isExit();
 
-
-
+        } catch (NyabotException e) {
+            return false;
+        }
+    }
 }

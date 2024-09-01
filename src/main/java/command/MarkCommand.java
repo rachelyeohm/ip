@@ -27,13 +27,13 @@ public class MarkCommand extends Command {
      */
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
         try {
             Task task = taskList.getTask(taskNumber-1);
             task.setDone(isMark);
-            ui.showMessage("I've marked this " + (isMark ? "" : "un") +
+            return "I've marked this " + (isMark ? "" : "un") +
                     "done for you nya. " +
-                    "\n" + task.toString());
+                    "\n" + task.toString();
         } catch (IndexOutOfBoundsException e) {
             throw new NyabotIndexOutOfBoundsException("This task number does not exist nya!");
         }

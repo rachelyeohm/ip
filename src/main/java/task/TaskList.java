@@ -1,42 +1,45 @@
 package task;
 
 import components.Parser;
-import exception.NyabotException;
 import exception.NyabotParseException;
 
 import java.util.ArrayList;
 
 
 public class TaskList {
-    private ArrayList<Task> taskList = new ArrayList<Task>();
+    private ArrayList<Task> tasks = new ArrayList<Task>();
 
     public void addTask(Task task) {
-        taskList.add(task);
+        tasks.add(task);
+    }
+
+    public void replaceTasks(TaskList taskList) {
+        this.tasks = taskList.tasks;
     }
 
     public void deleteTask(Task task) {
-        taskList.remove(task);
+        tasks.remove(task);
     }
     public void deleteTask(int taskNumber) {
 
-        taskList.remove(taskNumber);
+        tasks.remove(taskNumber);
     }
 
     public String displayTasks() {
-        StringBuilder textliststring = new StringBuilder();
-        for (int i = 0; i < taskList.size(); i++) {
-            textliststring.append((i + 1)).append(". ").append(taskList.get(i));
-            if (i < taskList.size()-1) {
-                textliststring.append("\n");
+        StringBuilder textListString = new StringBuilder();
+        for (int i = 0; i < tasks.size(); i++) {
+            textListString.append((i + 1)).append(". ").append(tasks.get(i));
+            if (i < tasks.size()-1) {
+                textListString.append("\n");
             }
 
         }
-        return textliststring.toString();
+        return textListString.toString();
     }
 
     public String displayTasksSaveable() throws NyabotParseException {
         StringBuilder sb = new StringBuilder();
-        for (Task task : taskList) {
+        for (Task task : tasks) {
             switch (task.getTaskType()) {
             case TODO:
                 sb.append("T | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName() + "\n");
@@ -59,10 +62,10 @@ public class TaskList {
     }
 
     public int getNumTasks() {
-        return taskList.size();
+        return tasks.size();
     }
 
     public Task getTask(int index) {
-        return taskList.get(index);
+        return tasks.get(index);
     }
 }

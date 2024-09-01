@@ -24,13 +24,13 @@ public class DeleteCommand extends Command {
      * @throws NyabotIndexOutOfBoundsException If task number is not in TaskList.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
         try {
             this.taskDescription = taskList.getTask(taskNumber-1).toString();
             taskList.deleteTask(this.taskNumber-1);
             this.taskSize = taskList.getNumTasks();
-            ui.showMessage("I've deleted this task nya!" + "\n" + this.taskDescription
-                    + " \nNyow you have " + this.taskSize + " task(s) in the list.");
+            return "I've deleted this task nya!" + "\n" + this.taskDescription
+                    + " \nNyow you have " + this.taskSize + " task(s) in the list.";
         } catch (IndexOutOfBoundsException e) {
             throw new NyabotIndexOutOfBoundsException("This task number does not exist nya!");
         }
