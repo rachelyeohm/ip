@@ -45,13 +45,13 @@ public class TaskList {
                 sb.append("T | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName() + "\n");
                 break;
             case DEADLINE:
-                String endTime = Parser.convertDateToOutput(task.getEndTime());
+                String endTime = Parser.convertDateTimeToOutput(task.getEndTime());
                 sb.append("D | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName())
                         .append(" | ").append(endTime).append("\n");
                 break;
             case EVENT:
-                String start = Parser.convertDateToOutput(task.getStartTime());
-                String end = Parser.convertDateToOutput(task.getEndTime());
+                String start = Parser.convertDateTimeToOutput(task.getStartTime());
+                String end = Parser.convertDateTimeToOutput(task.getEndTime());
                 sb.append("E | ").append((task.isDone() ? "1" : "0") + " | " + task.getTaskName())
                         .append(" | ").append(start)
                         .append(" | ").append(end).append("\n");

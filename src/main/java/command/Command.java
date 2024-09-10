@@ -1,6 +1,7 @@
 package command;
 import components.Storage;
 import components.Ui;
+import task.Scheduler;
 import task.TaskList;
 import exception.NyabotException;
 
@@ -23,11 +24,11 @@ abstract public class Command {
 
     /**
      * Returns nothing. Executes the command.
+     *
      * @param taskList TaskList object to add the task to.
-     * @param ui Ui object for interacting with user.
-     * @param storage Storage object for loading and saving data.
+     * @param ui       Ui object for interacting with user.
+     * @param storage  Storage object for loading and saving data.
      */
-    abstract public String execute(TaskList taskList, Ui ui, Storage storage) throws NyabotException;
-
+    abstract public String execute(TaskList taskList, Ui ui, Storage storage, Scheduler scheduler) throws NyabotException;
 
 }

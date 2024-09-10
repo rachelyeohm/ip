@@ -6,9 +6,9 @@ import task.Deadline;
 import task.Event;
 import task.Task;
 import task.ToDo;
-import task.Task.TaskType;
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -50,6 +50,14 @@ public class Parser {
             return new DeleteCommand(deleteNumber);
         case "save":
             return new SaveCommand();
+        case "schedule":
+            String word = parseTaskWithWord(input, "schedule");
+            if (word.trim().equals("today")) {
+                return new GetScheduleCommand(LocalDate.now());
+            } else {
+                LocalDate date = convertInputToDate(word);
+                return new GetScheduleCommand(date);
+            }
         default:
             throw new NyabotNoSuchCommandException("Nya, there is no such command!");
         }
@@ -111,7 +119,7 @@ public class Parser {
                 throw new NyabotMissingArgumentException("Valid deadline command content required nya!");
             }
             String deadline = parts[1];
-            task = new Deadline(taskName.trim(), Parser.convertInputToDate(deadline.trim()));
+            task = new Deadline(taskName.trim(), Parser.convertInputToDateTime(deadline.trim()));
             command = new AddCommand(task);
             break;
         case EVENT:
@@ -135,8 +143,8 @@ public class Parser {
             }
             String startTime = fromFirst ? parts[1].trim() : parts[2].trim();
             String endTime = fromFirst ? parts[2].trim() : parts[1].trim();
-            LocalDateTime startTimeDate = Parser.convertInputToDate(startTime.trim());
-            LocalDateTime endTimeDate = Parser.convertInputToDate(endTime.trim());
+            LocalDateTime startTimeDate = Parser.convertInputToDateTime(startTime.trim());
+            LocalDateTime endTimeDate = Parser.convertInputToDateTime(endTime.trim());
             if (endTimeDate.isBefore(startTimeDate)) {
                 throw new NyabotDateException("Start date cannot be after end date!");
             }
@@ -183,14 +191,22 @@ public class Parser {
      * @return LocalDateTime object representation of date.
      * @throws NyabotParseException If date is in the wrong format and cannot be parsed.
      */
-    public static LocalDateTime convertInputToDate(String string) throws NyabotParseException {
+    public static LocalDateTime convertInputToDateTime(String string) throws NyabotParseException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return LocalDateTime.parse(string, formatter);
         } catch (DateTimeParseException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
         }
+    }
 
+    public static LocalDate convertInputToDate(String string) throws NyabotParseException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return LocalDate.parse(string, formatter);
+        } catch (DateTimeParseException e) {
+            throw new NyabotParseException("Nya, we can't parse your date!");
+        }
     }
 
     /**
@@ -200,9 +216,19 @@ public class Parser {
      * @return LocalDateTime object representation of date.
      * @throws NyabotParseException If date is in the wrong format and cannot be parsed.
      */
-    public static LocalDateTime convertTxtInputToDate(String string) throws NyabotParseException {
+    public static LocalDateTime convertTxtInputToDateTime(String string) throws NyabotParseException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
+            return LocalDateTime.parse(string, formatter);
+        } catch (DateTimeParseException e) {
+            throw new NyabotParseException("Nya, we can't parse your date!");
+        }
+
+    }
+
+    public static LocalDateTime convertTxtInputToDate(String string) throws NyabotParseException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             return LocalDateTime.parse(string, formatter);
         } catch (DateTimeParseException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
@@ -218,9 +244,9 @@ public class Parser {
      * @return Date string in MM/dd/yyyy hh:mma format.
      * @throws NyabotParseException if date cannot be parsed.
      */
-    public static String convertDateToOutput(LocalDateTime date) throws NyabotParseException {
+    public static String convertDateTimeToOutput(LocalDateTime date) throws NyabotParseException {
         try {
-            return date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma"));
+            return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mma"));
         } catch (DateTimeException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
         }

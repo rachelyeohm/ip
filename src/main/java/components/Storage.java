@@ -76,12 +76,12 @@ public class Storage {
                 case "D":
                     taskList.addTask(new Deadline(taskArray[2],
                             taskArray[1].equals("1"),
-                            Parser.convertTxtInputToDate(taskArray[3].trim())));
+                            Parser.convertTxtInputToDateTime(taskArray[3].trim())));
                     break;
                 case "E":
                     taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"),
-                            Parser.convertTxtInputToDate(taskArray[3].trim()),
-                            Parser.convertTxtInputToDate(taskArray[4].trim())));
+                            Parser.convertTxtInputToDateTime(taskArray[3].trim()),
+                            Parser.convertTxtInputToDateTime(taskArray[4].trim())));
                     break;
                 }
                 line = br.readLine();

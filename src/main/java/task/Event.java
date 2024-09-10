@@ -38,8 +38,8 @@ public class Event extends Task {
         String status = super.isDone() ? "[E][X]" : "[E][ ]";
         try {
             return status + " " + super.getTaskName()
-                    + " (from: " + Parser.convertDateToOutput(super.getStartTime()) + " to: "
-                    + Parser.convertDateToOutput(super.getEndTime()) + ")";
+                    + " (from: " + Parser.convertDateTimeToOutput(super.getStartTime()) + " to: "
+                    + Parser.convertDateTimeToOutput(super.getEndTime()) + ")";
         } catch (NyabotParseException e) {
             return status + " " + super.getTaskName()
                     + " (from: " + super.getStartTime() + " to: "

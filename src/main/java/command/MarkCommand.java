@@ -2,6 +2,7 @@ package command;
 import components.Storage;
 import components.Ui;
 import exception.NyabotIndexOutOfBoundsException;
+import task.Scheduler;
 import task.Task;
 import task.TaskList;
 
@@ -27,7 +28,9 @@ public class MarkCommand extends Command {
      */
 
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
+    public String execute(TaskList taskList, Ui ui, Storage storage,
+                          Scheduler scheduler)
+            throws NyabotIndexOutOfBoundsException {
         try {
             Task task = taskList.getTask(taskNumber-1);
             task.setDone(isMark);
