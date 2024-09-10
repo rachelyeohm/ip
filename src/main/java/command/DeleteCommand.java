@@ -29,6 +29,7 @@ public class DeleteCommand extends Command {
             this.taskDescription = taskList.getTask(taskNumber-1).toString();
             taskList.deleteTask(this.taskNumber-1);
             this.taskSize = taskList.getNumTasks();
+            assert this.taskSize >= 0 : "task size should be at least 0";
             return "I've deleted this task nya!" + "\n" + this.taskDescription
                     + " \nNyow you have " + this.taskSize + " task(s) in the list.";
         } catch (IndexOutOfBoundsException e) {
