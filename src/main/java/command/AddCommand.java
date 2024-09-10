@@ -25,13 +25,11 @@ public class AddCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         taskList.addTask(this.task);
         this.taskSize = taskList.getNumTasks();
-        assert this.taskSize >= 1 : "task size should be more than 0";
         return "I've added this task nya!" + "\n" + task
                 + " \nNyow you have " + taskSize + " task(s) in the list.";
     }
 
     public Task getTask() {
-        assert this.task != null : "task should be more than null";
         return this.task;
     }
 }

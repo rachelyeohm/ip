@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass.set("gui.Launcher")
+    mainClass.set("Launcher")
 }
 
 shadowJar {
