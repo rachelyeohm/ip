@@ -16,10 +16,7 @@ public class TaskList {
     public void replaceTasks(TaskList taskList) {
         this.tasks = taskList.tasks;
     }
-
-    public void deleteTask(Task task) {
-        tasks.remove(task);
-    }
+d
     public void deleteTask(int taskNumber) {
 
         tasks.remove(taskNumber);

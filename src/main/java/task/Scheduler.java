@@ -4,7 +4,6 @@ import components.Parser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Scheduler {
