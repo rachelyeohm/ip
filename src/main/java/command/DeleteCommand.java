@@ -2,6 +2,7 @@ package command;
 import components.Storage;
 import components.Ui;
 import exception.NyabotIndexOutOfBoundsException;
+import task.Scheduler;
 import task.TaskList;
 
 /**
@@ -24,7 +25,7 @@ public class DeleteCommand extends Command {
      * @throws NyabotIndexOutOfBoundsException If task number is not in TaskList.
      */
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage) throws NyabotIndexOutOfBoundsException {
+    public String execute(TaskList taskList, Ui ui, Storage storage, Scheduler scheduler) throws NyabotIndexOutOfBoundsException {
         try {
             this.taskDescription = taskList.getTask(taskNumber-1).toString();
             taskList.deleteTask(this.taskNumber-1);

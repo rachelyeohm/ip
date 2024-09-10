@@ -2,6 +2,7 @@ package command;
 import components.Storage;
 import components.Ui;
 import exception.NyabotException;
+import task.Scheduler;
 import task.TaskList;
 
 /**
@@ -17,8 +18,8 @@ public class LoadCommand extends Command {
      * @throws NyabotException If unexpected exception occurs when loading.
      */
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage)
-            throws NyabotException {
+    public String execute(TaskList taskList, Ui ui, Storage storage,
+                          Scheduler scheduler) throws NyabotException {
         try {
             taskList.replaceTasks(storage.load());
             return "Nyabot history has been loaded!";

@@ -3,6 +3,7 @@ package command;
 import components.Storage;
 import components.Ui;
 import exception.NyabotException;
+import task.Scheduler;
 import task.TaskList;
 
 /**
@@ -19,8 +20,8 @@ public class SaveCommand extends Command {
      * saving.
      */
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage)
-            throws NyabotException {
+    public String execute(TaskList taskList, Ui ui, Storage storage
+            , Scheduler scheduler) throws NyabotException {
         storage.save(taskList);
         return "Saved successfully, nya!";
     }

@@ -1,6 +1,7 @@
 package command;
 import components.Storage;
 import components.Ui;
+import task.Scheduler;
 import task.TaskList;
 
 /**
@@ -18,7 +19,8 @@ public class ExitCommand extends Command {
      * @param storage Storage object for loading and saving data.
      */
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage,
+                          Scheduler scheduler) {
 
         return "Byebye, nya!";
     }

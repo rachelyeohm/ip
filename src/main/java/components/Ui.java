@@ -38,7 +38,9 @@ public class Ui {
         return
                 "Hello! I'm Nyabot. What can I do for you, nya?.\n" +
                         "For deadlines and events, dates should be written in yyyy-MM-dd HH:mm. " +
-                        "For example, you can write 2019-12-27 18:00.";
+                        "For example, you can write 2019-12-27 18:00.\n" +
+                        "For schedules, dates should be written in yyyy-MM-dd (without the time)."
+                ;
     }
 
     /**

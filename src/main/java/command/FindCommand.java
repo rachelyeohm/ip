@@ -2,6 +2,7 @@ package command;
 
 import components.Storage;
 import components.Ui;
+import task.Scheduler;
 import task.Task;
 import task.TaskList;
 
@@ -24,7 +25,8 @@ public class FindCommand extends Command {
      * @param storage Storage object for loading and saving data.
      */
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage) {
+    public String execute(TaskList taskList, Ui ui, Storage storage,
+                          Scheduler scheduler) {
         TaskList taskList1 = new TaskList();
         for (int i = 0; i < taskList.getNumTasks(); i++) {
             Task task = taskList.getTask(i);

@@ -59,7 +59,7 @@ public class Deadline extends Task {
         String status = super.isDone() ? "[D][X]" : "[D][ ]";
         try {
             return status + " " + super.getTaskName() + " (by: " +
-                    Parser.convertDateToOutput(super.getEndTime()) + ")";
+                    Parser.convertDateTimeToOutput(super.getEndTime()) + ")";
         } catch (NyabotParseException e) {
             return status + " " + super.getTaskName() + " (by: " +
                     super.getEndTime() + ")";

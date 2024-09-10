@@ -6,6 +6,7 @@ import components.Parser;
 import components.Storage;
 import components.Ui;
 import exception.NyabotException;
+import task.Scheduler;
 import task.TaskList;
 
 /**
@@ -17,13 +18,14 @@ public class Nyabot {
     private TaskList taskList;
     private Ui ui;
     private Storage storage;
-    private Parser parser;
+    private Scheduler scheduler;
 
     public Nyabot() {
         Ui ui = new Ui();
         try {
             TaskList taskList = new TaskList();
             Storage storage = new Storage("./data/Nyabot.txt", ui);
+            this.scheduler = new Scheduler();
             this.taskList = taskList;
             this.ui = ui;
             this.storage = storage;
@@ -49,7 +51,7 @@ public class Nyabot {
 
         ui.showMessage(ui.showWelcome());
         try {
-            new LoadCommand().execute(this.taskList, ui, storage);
+            new LoadCommand().execute(this.taskList, ui, storage, scheduler);
         } catch (NyabotException e) {
             ui.showMessage(e.getMessage());
         }
@@ -58,7 +60,7 @@ public class Nyabot {
             try {
                 String fullCommand = ui.readCommand();
                 Command c = Parser.parse(fullCommand);
-                ui.showMessage(c.execute(this.taskList, ui, storage));
+                ui.showMessage(c.execute(this.taskList, ui, storage, scheduler));
                 isExit = c.isExit();
             } catch (NyabotException e) {
                 ui.showMessage(e.getMessage());
@@ -71,7 +73,7 @@ public class Nyabot {
 
     public String tryLoad() {
         try {
-            return new LoadCommand().execute(this.taskList, ui, storage);
+            return new LoadCommand().execute(this.taskList, ui, storage, scheduler);
         } catch (NyabotException e) {
             return e.getMessage();
         }
@@ -80,7 +82,7 @@ public class Nyabot {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
-            return c.execute(this.taskList, ui, storage);
+            return c.execute(this.taskList, ui, storage, scheduler);
 
         } catch (NyabotException e) {
             return ui.showMessage(e.getMessage());
