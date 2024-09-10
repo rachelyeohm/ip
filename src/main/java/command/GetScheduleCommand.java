@@ -2,13 +2,14 @@ package command;
 
 import components.Storage;
 import components.Ui;
-import task.*;
+import task.Scheduler;
+import task.TaskList;
 
 import java.time.LocalDate;
 
 public class GetScheduleCommand extends Command {
 
-    private LocalDate date;
+    private final LocalDate date;
 
     public GetScheduleCommand(LocalDate date) {
         super();

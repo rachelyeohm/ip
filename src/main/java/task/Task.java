@@ -12,7 +12,7 @@ abstract public class Task {
     }
 
     private boolean isDone;
-    private String taskName;
+    private final String taskName;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;

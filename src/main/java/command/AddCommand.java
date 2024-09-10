@@ -1,14 +1,18 @@
 package command;
 import components.Storage;
 import components.Ui;
-import task.*;
+import task.Deadline;
+import task.Event;
+import task.Scheduler;
+import task.Task;
+import task.TaskList;
 
 /**
  * Represents a command to add task to the TaskList.
  */
 public class AddCommand extends Command {
-    private Task task;
-    private int taskSize;
+    private final Task task;
+
     public AddCommand(Task task) {
         super();
         this.task = task;
@@ -23,8 +27,8 @@ public class AddCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage, Scheduler scheduler) {
         taskList.addTask(this.task);
-        this.taskSize = taskList.getNumTasks();
-        assert this.taskSize >= 1 : "task size should be more than 0";
+        int taskSize = taskList.getNumTasks();
+        assert taskSize >= 1 : "task size should be more than 0";
         if (this.task instanceof Deadline deadline) {
             scheduler.addTask(deadline, deadline.getEndTime(), false);
         } else if (this.task instanceof Event event) {
