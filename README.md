@@ -19,3 +19,9 @@ todo <todo name>
 deadline <deadline name> /by <deadline>
 event <event name> /from <start time> /to <end time>
 delete <task index>
+exit
+find <search query>
+list
+mark <task index>
+unmark <task index>
+schedule <date / "today">
