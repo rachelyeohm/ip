@@ -10,5 +10,6 @@ There are three types of tasks, todo, deadline and event. Todo has a task name, 
 event has a task name, start time and end time.
 
 For deadlines and events, dates should be written in yyyy-MM-dd HH:mm.
-"For example, you can write 2019-12-27 18:00.
-"For schedules, dates should be written in yyyy-MM-dd (without the time).
+For example, you can write 2019-12-27 18:00.
+For schedules, dates should be written in yyyy-MM-dd (without the time).
+If you wish to know the schedule for the current day, you can simply type "schedule today".
