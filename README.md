@@ -13,3 +13,6 @@ For deadlines and events, dates should be written in yyyy-MM-dd HH:mm.
 For example, you can write 2019-12-27 18:00.
 For schedules, dates should be written in yyyy-MM-dd (without the time).
 If you wish to know the schedule for the current day, you can simply type "schedule today".
+
+Here is the complete list of commands:
+todo <todo name>
