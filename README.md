@@ -16,3 +16,6 @@ If you wish to know the schedule for the current day, you can simply type "sched
 
 Here is the complete list of commands:
 todo <todo name>
+deadline <deadline name> /by <deadline>
+event <event name> /from <start time> /to <end time>
+delete <task index>
