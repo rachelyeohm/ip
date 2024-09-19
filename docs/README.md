@@ -1,6 +1,6 @@
 # Nyabot User Guide
 
-![Alt text](/Ui.png "Product screenshot")
+![Alt text](/docs/Ui.png "Product screenshot")
 
 Nyabot is a basic task bot that also says nya.
 
