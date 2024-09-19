@@ -30,7 +30,7 @@ public class Scheduler {
         TaskList tasksEndingOnDay = schedule.get(endKey) == null ? new TaskList()
                 : schedule.get(endKey);
         output += tasksStartingOnDay.displayTasks() + "\n";
-        output += "The following tasks are ending today: \n";
+        output += "\n The following tasks are ending today: \n";
         output += tasksEndingOnDay.displayTasks() + "\n";
         return output;
     }

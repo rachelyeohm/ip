@@ -21,7 +21,7 @@ public class LoadCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage,
                           Scheduler scheduler) throws NyabotException {
         try {
-            taskList.replaceTasks(storage.load());
+            taskList.replaceTasks(storage.load(scheduler));
             return "Nyabot history has been loaded!";
         } catch (NyabotException e) {
             return e.getMessage();

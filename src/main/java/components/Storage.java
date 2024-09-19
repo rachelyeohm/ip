@@ -4,10 +4,7 @@ import exception.NyabotException;
 import exception.NyabotFileNotFoundException;
 import exception.NyabotIOException;
 import exception.NyabotParseException;
-import task.Deadline;
-import task.Event;
-import task.TaskList;
-import task.ToDo;
+import task.*;
 
 
 import java.io.BufferedReader;
@@ -25,24 +22,22 @@ public class Storage {
 
     private String path;
     private String directory;
-    public Storage(String path, Ui ui) throws NyabotIOException {
+    public Storage(String path) throws NyabotIOException {
         this.path = path;
-        createDirectory(path, ui);
+        createDirectory(path);
     }
 
     /**
      * Returns nothing. File path in variable path should end in .txt
      *
      * @param path File path for text file for chatbot history.
-     * @param ui Ui object to output messages to user.
      * @throws NyabotIOException If there are unexpected issues in creating the correct directory
      * to store the text file in.
      */
-    public void createDirectory(String path, Ui ui) throws NyabotIOException {
+    public void createDirectory(String path) throws NyabotIOException {
         try {
             Files.createDirectories(Paths.get(path.substring(0, path.lastIndexOf("/"))));
             this.directory = path.substring(0, path.lastIndexOf("/"));
-            ui.showMessage("Directory was successfully created to store the txt file nya.");
         } catch (IOException | StringIndexOutOfBoundsException e) {
             throw new NyabotIOException("There was an issue with creating the correct directory " +
                     "to save the tasks txt file in, nya.");
@@ -65,7 +60,7 @@ public class Storage {
      * is thrown if there is no txt file history. NyabotIOException is thrown if the txt
      * file is unreadable.
      */
-    public TaskList load() throws NyabotException {
+    public TaskList load(Scheduler scheduler) throws NyabotException {
         TaskList taskList = new TaskList();
 
         try {
@@ -79,14 +74,19 @@ public class Storage {
                     taskList.addTask(new ToDo(taskArray[2], taskArray[1].equals("1")));
                     break;
                 case "D":
-                    taskList.addTask(new Deadline(taskArray[2],
+                    Deadline deadline = new Deadline(taskArray[2],
                             taskArray[1].equals("1"),
-                            Parser.convertTxtInputToDateTime(taskArray[3].trim())));
+                            Parser.convertTxtInputToDateTime(taskArray[3].trim()));
+                    taskList.addTask(deadline);
+                    scheduler.addTask(deadline, deadline.getEndTime(), false);
                     break;
                 case "E":
-                    taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"),
+                    Event event = new Event(taskArray[2], taskArray[1].equals("1"),
                             Parser.convertTxtInputToDateTime(taskArray[3].trim()),
-                            Parser.convertTxtInputToDateTime(taskArray[4].trim())));
+                            Parser.convertTxtInputToDateTime(taskArray[4].trim()));
+                    taskList.addTask(event);
+                    scheduler.addTask(event, event.getStartTime(), true);
+                    scheduler.addTask(event, event.getEndTime(), false);
                     break;
                 }
                 line = br.readLine();

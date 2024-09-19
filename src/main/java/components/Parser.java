@@ -206,7 +206,7 @@ public class Parser {
      */
     public static LocalDateTime convertInputToDateTime(String string) throws NyabotParseException {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             return LocalDateTime.parse(string, formatter);
         } catch (DateTimeParseException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
@@ -215,7 +215,7 @@ public class Parser {
 
     public static LocalDate convertInputToDate(String string) throws NyabotParseException {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(string, formatter);
         } catch (DateTimeParseException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
@@ -231,17 +231,7 @@ public class Parser {
      */
     public static LocalDateTime convertTxtInputToDateTime(String string) throws NyabotParseException {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma");
-            return LocalDateTime.parse(string, formatter);
-        } catch (DateTimeParseException e) {
-            throw new NyabotParseException("Nya, we can't parse your date!");
-        }
-
-    }
-
-    public static LocalDateTime convertTxtInputToDate(String string) throws NyabotParseException {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             return LocalDateTime.parse(string, formatter);
         } catch (DateTimeParseException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
@@ -251,15 +241,15 @@ public class Parser {
 
 
     /**
-     * Returns date in string MM/dd/yyyy hh:mma format.
+     * Returns date in string dd/MM/yyyy HH:mm format.
      *
      * @param date LocalDateTime object representation of date.
-     * @return Date string in MM/dd/yyyy hh:mma format.
+     * @return Date string in dd/MM/yyyy HH:mm format.
      * @throws NyabotParseException if date cannot be parsed.
      */
     public static String convertDateTimeToOutput(LocalDateTime date) throws NyabotParseException {
         try {
-            return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mma"));
+            return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         } catch (DateTimeException e) {
             throw new NyabotParseException("Nya, we can't parse your date!");
         }
