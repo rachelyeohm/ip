@@ -38,7 +38,7 @@ Nyow you have 1 task(s) in the list.
 
 Add event task to the task list. Used for a task with a start time and end time.
 
-Endtime should be in the format dd/MM/yyyy HH:mm.
+End time should be in the format dd/MM/yyyy HH:mm.
 
 Example: `event CS2103T tutorial /from 20/09/2024 12:00 /to 20/09/2024 13:00`
 
