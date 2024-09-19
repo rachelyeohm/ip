@@ -1,4 +1,4 @@
-package gui;
+package core;
 
 import command.Command;
 import command.LoadCommand;
@@ -24,7 +24,7 @@ public class Nyabot {
         Ui ui = new Ui();
         try {
             TaskList taskList = new TaskList();
-            Storage storage = new Storage("./data/Nyabot.txt", ui);
+            Storage storage = new Storage("./data/Nyabot.txt");
             this.scheduler = new Scheduler();
             this.taskList = taskList;
             this.ui = ui;

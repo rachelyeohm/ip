@@ -25,24 +25,22 @@ public class Storage {
 
     private String path;
     private String directory;
-    public Storage(String path, Ui ui) throws NyabotIOException {
+    public Storage(String path) throws NyabotIOException {
         this.path = path;
-        createDirectory(path, ui);
+        createDirectory(path);
     }
 
     /**
      * Returns nothing. File path in variable path should end in .txt
      *
      * @param path File path for text file for chatbot history.
-     * @param ui Ui object to output messages to user.
      * @throws NyabotIOException If there are unexpected issues in creating the correct directory
      * to store the text file in.
      */
-    public void createDirectory(String path, Ui ui) throws NyabotIOException {
+    public void createDirectory(String path) throws NyabotIOException {
         try {
             Files.createDirectories(Paths.get(path.substring(0, path.lastIndexOf("/"))));
             this.directory = path.substring(0, path.lastIndexOf("/"));
-            ui.showMessage("Directory was successfully created to store the txt file nya.");
         } catch (IOException | StringIndexOutOfBoundsException e) {
             throw new NyabotIOException("There was an issue with creating the correct directory " +
                     "to save the tasks txt file in, nya.");

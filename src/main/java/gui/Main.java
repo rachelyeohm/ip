@@ -2,14 +2,12 @@ package gui;
 
 import java.io.IOException;
 
-import components.Storage;
-import components.Ui;
+import core.Nyabot;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import task.TaskList;
 
 /**
  * A GUI for Duke using FXML.
