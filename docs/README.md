@@ -157,7 +157,7 @@ Exits program.
 
 Example: `bye`
 
-Expected outcome: confirmation message of exiting, and closing of program.
+Expected outcome: confirmation message of exiting, and closing of program. 
 
 ```
 Byebye, nya!
