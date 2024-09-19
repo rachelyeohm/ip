@@ -124,7 +124,7 @@ Here are the matching tyasks in your list nya!
 
 View schedule for a certain day. Day should be in the format dd/MM/yyyy. 
 
-Alternatively, day can be the word "today".
+Alternatively, the day can be the word "today".
 
 Example: `schedule 20/09/2024` or `schedule today`
 
