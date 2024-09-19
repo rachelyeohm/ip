@@ -20,9 +20,9 @@ Nyow you have 1 task(s) in the list.
 
 ## Adding deadline: `deadline`
 
-Add deadline task to the task list. Used for a task with an endtime.
+Add deadline task to the task list. Used for a task with an end time.
 
-Endtime should be in the format dd/MM/yyyy HH:mm.
+End time should be in the format dd/MM/yyyy HH:mm.
 
 Example: `deadline IP task /by 20/09/2024 16:00`
 
