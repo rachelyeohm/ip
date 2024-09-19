@@ -1,6 +1,6 @@
 # Nyabot User Guide
 
-![Alt text](https://github.com/rachelyeohm/ip/docs/Ui.png "Product screenshot")
+![Alt text](https://github.com/rachelyeohm/ip/blob/master/docs/Ui.png "Product screenshot")
 
 Nyabot is a basic task bot that also says nya.
 
