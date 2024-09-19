@@ -4,10 +4,7 @@ import exception.NyabotException;
 import exception.NyabotFileNotFoundException;
 import exception.NyabotIOException;
 import exception.NyabotParseException;
-import task.Deadline;
-import task.Event;
-import task.TaskList;
-import task.ToDo;
+import task.*;
 
 
 import java.io.BufferedReader;
@@ -63,7 +60,7 @@ public class Storage {
      * is thrown if there is no txt file history. NyabotIOException is thrown if the txt
      * file is unreadable.
      */
-    public TaskList load() throws NyabotException {
+    public TaskList load(Scheduler scheduler) throws NyabotException {
         TaskList taskList = new TaskList();
 
         try {
@@ -77,14 +74,19 @@ public class Storage {
                     taskList.addTask(new ToDo(taskArray[2], taskArray[1].equals("1")));
                     break;
                 case "D":
-                    taskList.addTask(new Deadline(taskArray[2],
+                    Deadline deadline = new Deadline(taskArray[2],
                             taskArray[1].equals("1"),
-                            Parser.convertTxtInputToDateTime(taskArray[3].trim())));
+                            Parser.convertTxtInputToDateTime(taskArray[3].trim()));
+                    taskList.addTask(deadline);
+                    scheduler.addTask(deadline, deadline.getEndTime(), false);
                     break;
                 case "E":
-                    taskList.addTask(new Event(taskArray[2], taskArray[1].equals("1"),
+                    Event event = new Event(taskArray[2], taskArray[1].equals("1"),
                             Parser.convertTxtInputToDateTime(taskArray[3].trim()),
-                            Parser.convertTxtInputToDateTime(taskArray[4].trim())));
+                            Parser.convertTxtInputToDateTime(taskArray[4].trim()));
+                    taskList.addTask(event);
+                    scheduler.addTask(event, event.getStartTime(), true);
+                    scheduler.addTask(event, event.getEndTime(), false);
                     break;
                 }
                 line = br.readLine();
