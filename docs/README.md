@@ -36,7 +36,7 @@ Nyow you have 1 task(s) in the list.
 
 ## Adding event : `event`
 
-Add event task to the task list. Used for a task with a start time and endtime.
+Add event task to the task list. Used for a task with a start time and end time.
 
 Endtime should be in the format dd/MM/yyyy HH:mm.
 
