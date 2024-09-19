@@ -19,7 +19,7 @@ todo <todo name>
 deadline <deadline name> /by <deadline>
 event <event name> /from <start time> /to <end time>
 delete <task index>
-exit
+exit 
 find <search query>
 list
 mark <task index>
